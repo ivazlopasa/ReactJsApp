@@ -3,6 +3,7 @@ cd ReactJsApp-main
 npm install
 npm install -g node-modules
 npm run start
+open link in browser: http://localhost:3000/posts
 
 It took me 5 days to complete this project, because I wasnt able to work during the weekend. 
 Author: Iva Zlopasa
