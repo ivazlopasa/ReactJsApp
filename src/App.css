@@ -1,0 +1,169 @@
+.navbar-brand {
+  margin: 0.5rem;
+  font-size: 2rem;
+}
+
+.content {
+  max-width: 1600px;
+  text-align: center;
+  margin: auto;
+  padding: 5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.heroText {
+  font-size: 2rem;
+  margin: 1.2rem;
+}
+
+.helloText {
+  color: darkcyan;
+}
+
+.formInput {
+  width: 30%;
+  padding: 8px 10px;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+.postDiv:hover {
+  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1, 1.1);
+}
+
+.postDiv {
+  background: #282c34;
+  padding: 2rem;
+  text-decoration: none;
+  margin: 1rem;
+  border-radius: 5px;
+  box-shadow: -1px 2px 34px -13px rgba(0, 0, 0, 0.75);
+  text-align: left;
+  overflow: hidden;
+  height: 600px;
+}
+
+.row {
+  margin: 1rem;
+  padding: 5rem;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.postTitle {
+  color: azure;
+  font-size: 1.4em;
+}
+
+.postBody {
+  color: azure;
+  font-size: 0.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  margin: auto;
+  margin-top: 10rem;
+  border-radius: 50%;
+  border-top: 16px solid darkcyan;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.bodyText {
+  width: 70%;
+  text-align: left;
+  font-size: 1.3rem;
+  line-height: 2.5rem;
+  margin: auto;
+  margin-bottom: 3rem;
+}
+
+.authorText {
+  color: darkcyan;
+  line-height: 1.8rem;
+}
+
+.commentsDiv {
+  margin: auto;
+  width: 70%;
+  padding: 10px;
+  margin-bottom: 3rem;
+}
+
+.commentsText {
+  color: #d0f0c0;
+  line-height: 1.8rem;
+}
+
+.commentsTextPost {
+  color: darkcyan;
+  text-align: left;
+  line-height: 2.5rem;
+  font-size: 1.2rem;
+}
+
+.commentsTitle {
+  text-align: left;
+  color: darkcyan;
+  line-height: 3rem;
+  font-size: 1.6rem;
+}
+
+.subtitle {
+  font-size: 1.1em;
+  margin-bottom: 2rem;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
