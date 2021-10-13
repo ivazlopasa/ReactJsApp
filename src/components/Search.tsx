@@ -1,5 +1,5 @@
 //Imports needed for this file
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 //Constant Search with props getPosts for getting posts and filtering them by username, plus hello string for console log
 const Search = (props: { getPosts: Function; hello: string }) => {
@@ -8,7 +8,7 @@ const Search = (props: { getPosts: Function; hello: string }) => {
   //Console logging via props
   useEffect(() => {
     console.log(`${props.hello} Search Component`);
-  }, []);
+  }, [props.hello]);
   
   return (
     <form

@@ -4,24 +4,28 @@ import React, { useEffect, useState } from "react";
 const Comments = (props: { id: number; hello: string }) => {
   const [postComments, setPostComments] = useState([]);
 
+  const getFilteredComments = async () => {
+    const commentsAPI = await fetch(
+      "https://jsonplaceholder.typicode.com/comments"
+    );
+    const allComments = await commentsAPI.json();
+
+    //Filtering the comments relevant to the post id
+    const filteredComments = allComments.filter(
+      (c: { postId: number }) => props.id === c.postId
+    );
+    setPostComments(filteredComments);
+  };
+  
   useEffect(() => {
-    const getFilteredComments = async () => {
-      const commentsAPI = await fetch(
-        "https://jsonplaceholder.typicode.com/comments"
-      );
-      const allComments = await commentsAPI.json();
-
-      //Filtering the comments relevant to the post id
-      const filteredComments = allComments.filter(
-        (c: { postId: number }) => props.id === c.postId
-      );
-      setPostComments(filteredComments);
-    };
-
     //Console logging via props
-    getFilteredComments();
     console.log(`${props.hello} Comments Component`);
-  }, [props.hello, props.id]);
+
+    getFilteredComments();
+    return () => {
+      setPostComments([]); 
+    };
+  }, []);
 
   let comments: any;
   comments = postComments;

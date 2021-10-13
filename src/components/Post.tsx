@@ -16,7 +16,6 @@ function Post(props: { hello: string }) {
   const [activePost, setActivePost] = useState<IPost>();
   const [postUser, setPostUser] = useState<IUsers>();
   //For displaying loader until the appropriate post is found
-  const [isLoading2, setIsLoading] = useState(false);
   const {id} = useParams<IParams>();
 
   let url = "https://jsonplaceholder.typicode.com/users";
@@ -40,13 +39,13 @@ function Post(props: { hello: string }) {
 
       setActivePost(currentPost);
       setPostUser(user); 
-      setIsLoading(false);
+      return () => {
+      //setPostUser(postUser); 
+      };
 
     }
-  }, [value, data]);
+  }, [value, data, props.hello]);
 
-  let post: any;
-  post = activePost;
   let loading: boolean;
   loading = isLoading;
   //console.log(activePost?.id);
@@ -72,9 +71,9 @@ function Post(props: { hello: string }) {
         </div>
         <p className="lead">
           <Link to="/posts">
-            <a className="btn btn-dark btn-lg" role="button">
+            <button className="btn btn-dark btn-lg">
               {"Go Back"}
-            </a>
+            </button>
           </Link>
         </p>
       </div>
@@ -83,7 +82,4 @@ function Post(props: { hello: string }) {
 }
 //Exporting for use in other files
 export default Post;
-function searchParams(): { id: any; } {
-  throw new Error("Function not implemented.");
-}
 

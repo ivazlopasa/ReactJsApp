@@ -15,6 +15,9 @@ const useFetch = (url: any) => {
 
   useEffect(() => {
     fetchData();
+    return () => {
+      setData([]); // This worked for me
+    };
   }, []);
 
   return { data, isLoading };
