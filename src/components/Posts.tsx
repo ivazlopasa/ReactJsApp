@@ -16,7 +16,7 @@ const Posts = ( props: { hello: string } ) => {
   const [filteredPosts, setFilteredPosts] = useState <Array<IPost>>([]);
   const [users, setUsers] = useState([]);
 
-  const getPosts =  async  (search: string) => {
+  const getPosts = (search: string) => {
     try {
       const postUser: any = users.find(
         (u: { username: string }) =>
@@ -28,8 +28,8 @@ const Posts = ( props: { hello: string } ) => {
         );
         console.log(postUser);
         setFilteredPosts(filteredPosts);
-        console.log("post");
-        console.log(filteredPosts);
+        //console.log("post");
+        //console.log(filteredPosts);
       } else {
         setFilteredPosts([]);
       }
@@ -58,9 +58,9 @@ const Posts = ( props: { hello: string } ) => {
     }
   };
     componentDidMount(); 
-    getPosts("");
 
-  }, [value.value])
+
+  }, [props.hello, value.value])
 
   //Console logging via props
   useEffect(() => {
@@ -73,7 +73,7 @@ const Posts = ( props: { hello: string } ) => {
         <div>
           <header>
             <nav className="navbar navbar-dark bg-dark">
-              <a className="navbar-brand" href="#">
+              <a className="navbar-brand" href="/">
                 <span className="helloText">Q</span>posts
               </a>
             </nav>
