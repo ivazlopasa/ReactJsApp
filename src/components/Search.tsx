@@ -9,10 +9,13 @@ const Search = (props: { getPosts: Function; hello: string }) => {
   useEffect(() => {
     console.log(`${props.hello} Search Component`);
   }, []);
+  
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        console.log(props);
+        console.log("search");
         if (search) props.getPosts(search);
       }}
       style={{ marginBottom: "2rem" }}

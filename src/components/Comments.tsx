@@ -1,6 +1,4 @@
-//Imports needed for this file
 import React, { useEffect, useState } from "react";
-import useFetch from "../hooks/useFetch";
 
 //Constant Comments with props id to connect comments with posts and hello string for rendering log in the console
 const Comments = (props: { id: number; hello: string }) => {
@@ -15,7 +13,7 @@ const Comments = (props: { id: number; hello: string }) => {
 
       //Filtering the comments relevant to the post id
       const filteredComments = allComments.filter(
-        (c: { postId: Number }) => props.id === c.postId
+        (c: { postId: number }) => props.id === c.postId
       );
       setPostComments(filteredComments);
     };
@@ -23,7 +21,7 @@ const Comments = (props: { id: number; hello: string }) => {
     //Console logging via props
     getFilteredComments();
     console.log(`${props.hello} Comments Component`);
-  }, []);
+  }, [props.hello, props.id]);
 
   let comments: any;
   comments = postComments;
@@ -35,7 +33,7 @@ const Comments = (props: { id: number; hello: string }) => {
         <div>There are no comments for this post</div>
       ) : (
         comments.map((c: { name: string; id: number }) => (
-          <div>
+          <div key={c.id}>
             {counter++}. {c.name}
           </div>
         ))

@@ -24,8 +24,8 @@
 .helloText {
   color: darkcyan;
 }
-
 .formInput {
+  align-items: center;
   width: 30%;
   padding: 8px 10px;
   margin: 10px 0;

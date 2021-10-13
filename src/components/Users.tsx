@@ -1,12 +1,13 @@
 //Imports needed for this file
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
+import { IUsers } from "../interfaces/IUsers";
 
 //Constant Users with props userId to connect users with posts and hello string for rendering log in the console
 const Users = (props: { userId: number; hello: string }) => {
   //Fetching the data from the json file
   let url = "https://jsonplaceholder.typicode.com/users";
-  const { data, isLoading } = useFetch(url);
+  const { data, isLoading } = useFetch(url); useState<IUsers>();
 
   //Displaying component in console
   useEffect(() => {

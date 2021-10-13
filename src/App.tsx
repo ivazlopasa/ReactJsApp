@@ -1,44 +1,26 @@
 //Imports needed for this file
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "./App.css";
-import Search from "./components/Search";
 import Posts from "./components/Posts";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import Post from "./components/Post";
+import PostsContext from './context/PostsContext';
+import {IPost} from './interfaces/IPost';
 
 type MyProps = {
   hello: string;
 };
 
-//Class App is responsible for displayin the homepage(posts page)
-class App extends React.Component<MyProps> {
-  state = {
-    posts: [],
-    filteredPosts: [],
-    users: [],
-  };
+//Class App is responsible for displaying the homepage(posts page)
+function App (props: MyProps){
 
-  //Filtering posts so that search works on user's username
-  getPosts = async (search: string) => {
-    try {
-      const postUser: any = this.state.users.find(
-        (u: { username: string }) =>
-          u.username.toLowerCase() === search.toLowerCase()
-      );
-      if (postUser) {
-        const filteredPosts = this.state.posts.filter(
-          (p: { userId: string }) => p.userId === postUser.id
-        );
-        this.setState({ filteredPosts });
-      } else {
-        this.setState({ filteredPosts: [] });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const [posts, setPosts] = useState <Array<IPost>>([]); 
+  const [filteredPosts, setFilteredPosts] = useState <Array<IPost>>([]);
+  const [users, setUsers] = useState([]);
 
-  //Getting the data from json files
-  componentDidMount = async () => {
-    console.log(`${this.props.hello} App Component`);
+  useEffect(() => {
+   //Getting the data from json files
+  const componentDidMount = async () => {
     try {
       const postAPI = await fetch(`https://jsonplaceholder.typicode.com/posts`);
       const posts = await postAPI.json();
@@ -46,39 +28,59 @@ class App extends React.Component<MyProps> {
         `https://jsonplaceholder.typicode.com/users`
       );
       const users = await usersAPI.json();
-      this.setState({ posts, filteredPosts: posts, users });
+      setPosts(posts);
+      setFilteredPosts(posts);
+      setUsers(users);
+
     } catch (e) {
       console.log(e);
     }
   };
 
-  render() {
-    return (
-      <div>
-        <div>
-          <header>
-            <nav className="navbar navbar-dark bg-dark">
-              <a className="navbar-brand" href="#">
-                <span className="helloText">Q</span>posts
-              </a>
-            </nav>
-          </header>
-        </div>
+    //console.log(`${props.hello} App Component`);
+    const getPosts = /* async */ (search: string) => {
+      try {
+        const postUser: any = users.find(
+          (u: { username: string }) =>
+            u.username.toLowerCase() === search.toLowerCase()
+        );
+        if (postUser) {
+          const filteredPosts = posts.filter(
+            (p: { userId: number }) => p.userId === postUser.id
+          );
+          setFilteredPosts(filteredPosts);
+        } else {
+          setFilteredPosts([]);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    componentDidMount(); 
+    getPosts("");
+  }, [])
 
+  const hello = "Hello From";
+
+    return (
+    <div>
+    <PostsContext.Provider value={{value: posts}}> 
+    <BrowserRouter>
+      <Switch>
+        <Route path="/posts" exact>
+          <Posts hello={hello}/>
+        </Route>
+          <Route exact path="/" render={() => (<Redirect to="/posts" />)} /> 
+        <Route path="/post/:id">
+          <Post hello={hello} />
+        </Route> 
+      </Switch>
+    </BrowserRouter>
         <div className="content">
-          <h1>
-            <span className="helloText">Q</span>Posts
-          </h1>
-          <h2 className="heroText">
-            <span className="helloText">Hello! </span>Every day we have some new
-            posts, feel free to check it out, enjoy!
-          </h2>
-          <Search getPosts={this.getPosts} hello={this.props.hello} />
-          <Posts posts={this.state.filteredPosts} hello={this.props.hello} />
         </div>
-      </div>
+    </PostsContext.Provider> 
+    </div>
     );
-  }
 }
 
 //Exporting for use in other files
