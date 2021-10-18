@@ -6,6 +6,8 @@ import Users from "./Users";
 import Search from "./Search";
 import PostsContext from "../context/PostsContext";
 import {IPost} from '../interfaces/IPost';
+import axios from "axios";
+import { useQuery } from "react-query";
 
 //Constant Posts with props posts for displaying all posts on homepage and hello string for rendering log in the console
 const Posts = ( props: { hello: string } ) => {
@@ -16,7 +18,7 @@ const Posts = ( props: { hello: string } ) => {
   const [filteredPosts, setFilteredPosts] = useState <Array<IPost>>([]);
   const [users, setUsers] = useState([]);
 
-  const getPosts = (search: string) => {
+  const getSearchedPosts = (search: string) => {
     try {
       const postUser: any = users.find(
         (u: { username: string }) =>
@@ -37,30 +39,22 @@ const Posts = ( props: { hello: string } ) => {
       console.log(e);
     }
   };
+
+  const getPosts = async () => {
+    const { data } = await axios.get('https://jsonplaceholder.typicode.com/users');
+    return data;
+    };
+    const { data } = useQuery('posts', getPosts);
+
   
   useEffect(() => {
-    console.log(`${props.hello} App Component`);
-
-   //Getting the data from json files
-  const componentDidMount = async () => {
-    try {
-      const usersAPI = await fetch(
-        `https://jsonplaceholder.typicode.com/users`
-      );
+      const users= data;
       const posts = value.value;
-      const users = await usersAPI.json();
+
       setPosts(posts);
       setFilteredPosts(posts);
       setUsers(users);
-
-    } catch (e) {
-      console.log(e);
-    }
-  };
-    componentDidMount(); 
-
-
-  }, [props.hello, value.value])
+  }, [data, props.hello, value.value])
 
   //Console logging via props
   useEffect(() => {
@@ -68,6 +62,7 @@ const Posts = ( props: { hello: string } ) => {
     
   }, [props.hello]); 
 
+  if(!posts) return (<div>no posts</div>)
   return (
     <div>
         <div>
@@ -88,11 +83,11 @@ const Posts = ( props: { hello: string } ) => {
             <span className="helloText">Hello! </span>Every day we have some new
             posts, feel free to check it out, enjoy!
           </h2>
-          <Search getPosts={getPosts} hello={props.hello} />
+          <Search getPosts={getSearchedPosts} hello={props.hello} />
           </div>
     <div className="container">
       <div className="row">
-        {filteredPosts.map((post) => {
+        {filteredPosts?.map((post) => {
           return (
             <div key={post.id} className="col-md-4">
               <Link
