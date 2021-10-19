@@ -1,12 +1,13 @@
 //Imports needed for this file
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import Comments from "./Comments";
 import PostsContext from "../context/PostsContext";
 import {IParams} from '../interfaces/IParams';
 import {IPost} from '../interfaces/IPost';
-import useFetch from "../hooks/useFetch";
 import { IUsers } from "../interfaces/IUsers";
+import {useQuery} from 'react-query';
+import axios from "axios";
 
 //Function Post with props id for displaying active post(the one user choose) on homepage and hello string for rendering log in the console
 function Post(props: { hello: string }) {
@@ -15,17 +16,17 @@ function Post(props: { hello: string }) {
 
   const [activePost, setActivePost] = useState<IPost>();
   const [postUser, setPostUser] = useState<IUsers>();
-  //For displaying loader until the appropriate post is found
   const {id} = useParams<IParams>();
 
-  let url = "https://jsonplaceholder.typicode.com/users";
-  const { data, isLoading } = useFetch(url);
-
+  const getUsers = async () => {
+    const { data } = await axios.get('https://jsonplaceholder.typicode.com/users');
+    return data;
+    };
+    const { data } = useQuery('find', getUsers);
+    let users = data;
 
   useEffect(() => {
-
     console.log(`${props.hello} Post Component`);
-    let users = data;
     //console.log(users);
     //console.log(value);
     
@@ -39,22 +40,13 @@ function Post(props: { hello: string }) {
 
       setActivePost(currentPost);
       setPostUser(user); 
-      return () => {
-      //setPostUser(postUser); 
-      };
 
     }
-  }, [value, data, props.hello]);
+  }, [value, data, props.hello, users, id]);
 
-  let loading: boolean;
-  loading = isLoading;
-  //console.log(activePost?.id);
+  if(!activePost) return (<div className="loader"></div>);
 
-  return loading ? (
-    <div>
-      <div className="loader"></div>
-    </div>
-  ) : (
+  return(
     <div className="content">
       <div className="jumbotron">
         <h2>{activePost?.title}</h2>
