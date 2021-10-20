@@ -3,7 +3,7 @@ import { IPost } from '../interfaces/IPost';
 
 const PostsContext = React.createContext({
 
-    value: [] as Array<IPost>,
+    posts: [] as Array<IPost>
 });
 
 export default PostsContext;

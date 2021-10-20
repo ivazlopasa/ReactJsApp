@@ -21,7 +21,7 @@
   margin: 1.2rem;
 }
 
-.helloText {
+.blueText {
   color: darkcyan;
 }
 .formInput {
@@ -114,7 +114,8 @@ a {
 
 .authorText {
   color: darkcyan;
-  line-height: 1.8rem;
+  line-height: 2rem;
+  font-size: 1.1rem;
 }
 
 .commentsDiv {
@@ -126,7 +127,8 @@ a {
 
 .commentsText {
   color: #d0f0c0;
-  line-height: 1.8rem;
+  line-height: 2rem;
+  font-size: 1.1rem;
 }
 
 .commentsTextPost {

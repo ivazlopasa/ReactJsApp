@@ -33,15 +33,15 @@ const Comments = (props: { id: number; hello: string }) => {
   comments = postComments;
   let counter = 1;
 
-  if(!comments) return (<>There are no comments for this post</>);
+  if(!comments) return (<div>There are no comments for this post</div>);
 
   return (
     <>
       {(
         comments.map((c: { name: string; id: number }) => (
-          <div key={c.id}>
+          <p key={c.id}>
             {counter++}. {c.name}
-          </div>
+          </p>
         ))
       )}
     </>
