@@ -3,7 +3,7 @@ import { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Comments from "./Comments";
 import Users from "./Users";
-import Search from "./Search";
+import Filter from "./Filter";
 import PostsContext from "../context/PostsContext";
 import {IPost} from '../interfaces/IPost';
 import axios from "axios";
@@ -12,7 +12,7 @@ import { useQuery } from "react-query";
 //Constant Posts with props posts for displaying all posts on homepage and hello string for rendering log in the console
 const Posts = ( props: { hello: string } ) => {
 
-  const value = useContext(PostsContext);
+  const postsFromContext = useContext(PostsContext);
 
   const [posts, setPosts] = useState <Array<IPost>>([]); 
   const [filteredPosts, setFilteredPosts] = useState <Array<IPost>>([]);
@@ -49,12 +49,11 @@ const Posts = ( props: { hello: string } ) => {
   
   useEffect(() => {
       const users= data;
-      const posts = value.value;
 
-      setPosts(posts);
-      setFilteredPosts(posts);
+      setPosts(postsFromContext.posts);
+      setFilteredPosts(postsFromContext.posts);
       setUsers(users);
-  }, [data, props.hello, value.value])
+  }, [data, props.hello, postsFromContext])
 
   //Console logging via props
   useEffect(() => {
@@ -62,64 +61,49 @@ const Posts = ( props: { hello: string } ) => {
     
   }, [props.hello]); 
 
-  if(!posts) return (<div>no posts</div>)
+  if(!posts) return (<div>There is no posts</div>)
   return (
-    <div>
-        <div>
-          <header>
-            <nav className="navbar navbar-dark bg-dark">
-              <a className="navbar-brand" href="/">
-                <span className="helloText">Q</span>posts
-              </a>
-            </nav>
-          </header>
-        </div>
-
-        <div className="content">
-          <h1>
-            <span className="helloText">Q</span>Posts
-          </h1>
-          <h2 className="heroText">
-            <span className="helloText">Hello! </span>Every day we have some new
-            posts, feel free to check it out, enjoy!
-          </h2>
-          <Search getPosts={getSearchedPosts} hello={props.hello} />
-          </div>
-    <div className="container">
+    <>
+      <header>
+        <nav className="navbar navbar-dark bg-dark">
+          <a className="navbar-brand" href="/">
+            <span className="blueText">Q</span>posts
+          </a>
+        </nav>
+      </header>
+      <div className="content">
+        <h1>
+          <span className="blueText">Q</span>Posts
+        </h1>
+        <h2 className="heroText">
+          <span className="blueText">Hello!</span>Every day we have some new
+              posts, feel free to check it out, enjoy!
+        </h2>
+        <Filter getPosts={getSearchedPosts} hello={props.hello} />
+      </div>
       <div className="row">
         {filteredPosts?.map((post) => {
           return (
             <div key={post.id} className="col-md-4">
-              <Link
-                to={{ pathname: `/post/${post.id}`, state: { post: post.id } }}
-              >
+              <Link to={{ pathname: `/post/${post.id}`, state: { post: post.id } }}>
                 <div className="postDiv">
-                  <div>
-                    <h2 className="postTitle">
-                      {post.title.length < 15
-                        ? `${post.title}`
-                        : `${post.title.substr(0, 20)}...`}
-                    </h2>
-                  </div>
-                  <div>
-                    <p className="postBody">{post.body}.</p>
-                  </div>
-                  <p className="authorText">
-                    <span className="subtitle">Author:</span>
+                  <h2 className="postTitle">
+                    {post.title.length < 15 ? `${post.title}` : `${post.title.substr(0, 20)}...`}
+                  </h2>
+                  <p className="postBody">{post.body}.</p>
+                  <h4 className="authorText">Author: 
                     <Users userId={post.userId} hello={props.hello} />
-                  </p>
-                  <p className="commentsText">
-                    <span className="subtitle">Comments:</span>
+                  </h4>
+                  <div className="commentsText">Comments:
                     <Comments id={post.id} hello={props.hello} />
-                  </p>
+                  </div>
                 </div>
               </Link>
             </div>
           );
         })} 
       </div>
-    </div>
-    </div>
+    </>
   );
 };
 

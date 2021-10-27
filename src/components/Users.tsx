@@ -10,8 +10,8 @@ const Users = (props: { userId: number; hello: string }) => {
   const getUsers = async () => {
     const { data } = await axios.get('https://jsonplaceholder.typicode.com/users');
     return data;
-    };
-    const { data } = useQuery('build', getUsers);  useState<IUsers>();
+  };
+  const { data } = useQuery('build', getUsers);  useState<IUsers>();
 
   function getUsername(data: any, userId: number) {
     const user = data?.find((user: { id: number }) => userId === user.id);
@@ -23,7 +23,7 @@ const Users = (props: { userId: number; hello: string }) => {
     console.log(`${props.hello} Users Component`);
   }, [props.hello]);
 
-  if(!getUsername(data, props.userId)) return (<div>There are no users for this post</div>);
+  if(!getUsername(data, props.userId)) return (<span>There are no users for this post</span>);
   
   return (
     <>{getUsername(data, props.userId)}</>

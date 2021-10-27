@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 //Constant Search with props getPosts for getting posts and filtering them by username, plus hello string for console log
-const Search = (props: { getPosts: Function; hello: string }) => {
+const Filter = (props: { getPosts: Function; hello: string }) => {
   const [search, setSearch] = useState("");
 
   //Console logging via props
@@ -28,8 +28,8 @@ const Search = (props: { getPosts: Function; hello: string }) => {
         onChange={(e) => setSearch(e.target.value)}
       />
       <br />
-      <button className="btn-lg btn-outline-dark">Search</button>
+      <button className="btn-lg btn-outline-dark">Filter</button>
     </form>
   );
 };
-export default Search;
+export default Filter;
