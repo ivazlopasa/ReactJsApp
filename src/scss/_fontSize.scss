@@ -1,0 +1,13 @@
+:root {
+// Body text size
+--text-base-size: 1em;
+    
+// Scale text styles
+--text-scale-ratio: 1.1;
+--text-xs: calc((1.1em / var(--text-scale-ratio)));
+--text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
+--text-md: calc(var(--text-sm) * var(--text-scale-ratio) * var(--text-scale-ratio));
+--text-lg: calc(var(--text-md) * var(--text-scale-ratio));
+--text-xl: calc(var(--text-lg) * var(--text-scale-ratio));
+--text-xxl: calc(var(--text-xl) * var(--text-scale-ratio));
+}

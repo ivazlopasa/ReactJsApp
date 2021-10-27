@@ -1,0 +1,30 @@
+@use 'scss/colors' as *;
+@use 'scss/fontSize' as *;
+@use 'scss/lineHeight' as *;
+@use 'scss/margins' as *;
+@use 'scss/padding' as *;
+@use 'scss/align' as *;
+@use 'components/CommentsC/comments' as *;
+@use 'components/FilterC/filter' as *;
+@use 'components/SinglePostC/singlePost' as *;
+@use 'components/PostsC/posts' as *;
+@use 'components/UsersC/users' as *;
+
+.App-header {
+    background-color: var(--color-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: var(--align-center);
+    font-size: var(--text-xl);
+    color: var(--color-txt-primary);
+}
+.content {
+    max-width: 1600px;
+    text-align: var(--align-center);
+    margin: var(--margin-auto);
+    padding:var(--padding-lg);
+}
+.blueText {
+    color: var(--color-secondary);
+}

@@ -15,7 +15,6 @@ const Filter = (props: { getPosts: Function; hello: string }) => {
       onSubmit={(e) => {
         e.preventDefault();
         console.log(props);
-        console.log("search");
         if (search) props.getPosts(search);
       }}
       style={{ marginBottom: "2rem" }}

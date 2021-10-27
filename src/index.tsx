@@ -6,7 +6,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const hello = "Hello From";
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+    queries: {
+    refetchOnWindowFocus: false,
+    },
+},
+});
 
 //rendering Router instead of App to use paths in Router file
 ReactDOM.render(

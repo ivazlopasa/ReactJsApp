@@ -1,22 +1,23 @@
 //Imports needed for this file
 import { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import Comments from "./Comments";
-import Users from "./Users";
-import Filter from "./Filter";
-import PostsContext from "../context/PostsContext";
-import {IPost} from '../interfaces/IPost';
-import axios from "axios";
-import { useQuery } from "react-query";
+import Comments from "../CommentsC/Comments";
+import Users from "../UsersC/Users";
+import Filter from "../FilterC/Filter";
+import PostsContext from "../../context/PostsContext";
+import {IPost} from '../../interfaces/IPost';
+import { IUsers } from "../../interfaces/IUsers";
+import { IComments } from "../../interfaces/IComments";
 
 //Constant Posts with props posts for displaying all posts on homepage and hello string for rendering log in the console
 const Posts = ( props: { hello: string } ) => {
 
-  const postsFromContext = useContext(PostsContext);
+  const postAppContext = useContext(PostsContext);
 
   const [posts, setPosts] = useState <Array<IPost>>([]); 
   const [filteredPosts, setFilteredPosts] = useState <Array<IPost>>([]);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<Array<IUsers>>([]);
+  const [comments, setPostComments] = useState<Array<IComments>>([]);
 
   const getSearchedPosts = (search: string) => {
     try {
@@ -30,8 +31,6 @@ const Posts = ( props: { hello: string } ) => {
         );
         console.log(postUser);
         setFilteredPosts(filteredPosts);
-        //console.log("post");
-        //console.log(filteredPosts);
       } else {
         setFilteredPosts([]);
       }
@@ -40,28 +39,16 @@ const Posts = ( props: { hello: string } ) => {
     }
   };
 
-  const getPosts = async () => {
-    const { data } = await axios.get('https://jsonplaceholder.typicode.com/users');
-    return data;
-    };
-    const { data } = useQuery('posts', getPosts);
-
-  
-  useEffect(() => {
-      const users= data;
-
-      setPosts(postsFromContext.posts);
-      setFilteredPosts(postsFromContext.posts);
-      setUsers(users);
-  }, [data, props.hello, postsFromContext])
-
-  //Console logging via props
   useEffect(() => {
     console.log(`${props.hello} Posts Component`);
-    
-  }, [props.hello]); 
+      const users = postAppContext.users;
+      console.log(postAppContext.users);
+      setPosts(postAppContext.posts);
+      setFilteredPosts(postAppContext.posts);
+      setUsers(users);
+      setPostComments(postAppContext.comments);
+  }, [props.hello, postAppContext])
 
-  if(!posts) return (<div>There is no posts</div>)
   return (
     <>
       <header>
@@ -92,7 +79,7 @@ const Posts = ( props: { hello: string } ) => {
                   </h2>
                   <p className="postBody">{post.body}.</p>
                   <h4 className="authorText">Author: 
-                    <Users userId={post.userId} hello={props.hello} />
+                    <Users data={users} userId={post.userId} hello={props.hello} />
                   </h4>
                   <div className="commentsText">Comments:
                     <Comments id={post.id} hello={props.hello} />
