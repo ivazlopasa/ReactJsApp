@@ -1,24 +1,25 @@
 .commentsDiv {
-    margin: var(--margin-auto);
-    width: 70%;
-    padding: var(--padding-sm);
-    margin-bottom: var(--margin-bottom);
+  margin: var(--margin-auto);
+  width: 70%;
+  padding: var(--padding-sm);
+  margin-bottom: var(--margin-bottom);
 }
-.comment{
-    color: var(--color-secondary);
-    text-align: var(--align-left);
-    line-height: var(--line-height--md);
+.comment {
+  color: var(--color-secondary);
+  text-align: var(--align-left);
+  line-height: var(--line-height--md);
 }
 .commentsText {
-    color: var(--color-txt-secondary);
-    line-height: var(--line-height--sm);
-    font-size: var(--text-sm);
+  color: var(--color-txt-secondary);
+  line-height: var(--line-height--sm);
+  font-size: var(--text-sm);
 }
 .commentsTextPost {
-    @extend .comment;
-    font-size: var(--text-md);
+  @extend .comment;
+  font-size: var(--text-md);
+  margin-bottom: var(--margin-bottom);
 }
 .commentsTitle {
-    @extend .comment;
-    font-size: var(--text-lg);
+  @extend .comment;
+  font-size: var(--text-lg);
 }
