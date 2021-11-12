@@ -16,25 +16,24 @@ type MyProps = {
   hello: string;
 };
 
-//Class App is responsible for displaying the homepage(posts page)
 function App(props: MyProps) {
   const hello = "Hello From";
   const [posts, setPosts] = useState<Array<IPost>>([]);
   const [users, setUsers] = useState<Array<IUsers>>([]);
   const [comments, setPostComments] = useState<Array<IComments>>([]);
-  const [search, setSearch] = useState("");
+  const [filterText, setFilterText] = useState("");
+  const [filteredPosts, setFilteredPosts] = useState<Array<IPost>>([]);
 
-  //Getting the data from json files
+  //Getting posts data from json file
   const getPosts = async () => {
     const { data } = await axios.get(
       "https://jsonplaceholder.typicode.com/posts"
     );
-    console.log(data);
     return data;
   };
+  const { data: dataPosts } = useQuery("posts", getPosts);
 
-  const { data } = useQuery("posts", getPosts);
-
+  //Getting users data from json file
   const getUsers = async () => {
     const { data } = await axios.get(
       "https://jsonplaceholder.typicode.com/users"
@@ -43,6 +42,7 @@ function App(props: MyProps) {
   };
   const { data: dataUsers } = useQuery("users", getUsers);
 
+  //Getting comments data from json file
   const getComments = async () => {
     const { data } = await axios.get(
       "https://jsonplaceholder.typicode.com/comments"
@@ -51,11 +51,27 @@ function App(props: MyProps) {
   };
   const { data: dataComments } = useQuery("comments", getComments);
 
-  const [filteredPosts, setFilteredPosts] = useState<Array<IPost>>([]);
+  /**
+   * Filter function for displaying filtered data
+   * @param {string} filterText
+   * finding in users array usernames which match/include filterText
+   * if user is found, filter posts based on id
+   */
+  const getFilteredPosts = (filterText: string) => {
+    const postUser: any = users.find((u: { username: string }) =>
+      u.username.toLowerCase().includes(filterText.toLowerCase())
+    );
+    if (postUser) {
+      const filteredPosts = posts.filter(
+        (p: { userId: number }) => p.userId === postUser.id
+      );
+      setFilteredPosts(filteredPosts);
+    }
+  };
 
   useEffect(() => {
-    if (data) {
-      const posts = data;
+    if (dataPosts) {
+      const posts = dataPosts;
       setPosts(posts);
     }
     if (dataUsers) {
@@ -66,36 +82,16 @@ function App(props: MyProps) {
       const comments = dataComments;
       setPostComments(comments);
     }
-    if (search) {
-      console.log(search);
-      const getSearchedPosts = (search: string) => {
-        try {
-          const postUser: any = users.find((u: { username: string }) =>
-            u.username.toLowerCase().includes(search.toLowerCase())
-          );
-          if (postUser) {
-            const filteredPosts = posts.filter(
-              (p: { userId: number }) => p.userId === postUser.id
-            );
-            console.log(postUser);
-            setFilteredPosts(filteredPosts);
-            console.log(search);
-            console.log(filteredPosts);
-          }
-        } catch (e) {
-          console.log(e);
-        }
-      };
-      getSearchedPosts(search);
+    if (filterText) {
+      getFilteredPosts(filterText);
     }
-  }, [data, dataComments, dataUsers, posts, search, users]);
-
-  console.log(filteredPosts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataPosts, dataComments, dataUsers, posts, filterText, users]);
 
   return (
     <>
       <PostsContext.Provider
-        value={{ posts, users, comments, search, setSearch }}
+        value={{ posts, users, comments, filterText, setFilterText }}
       >
         <BrowserRouter>
           <Switch>

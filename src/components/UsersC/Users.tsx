@@ -9,6 +9,12 @@ const Users = (props: { data: IUsers[]; userId: number; hello: string }) => {
     console.log(`${props.hello} Users Component`);
   }, [props.hello]);
 
+  /**
+   * Function for finding the user
+   * @param {any} data
+   * @param {number} userId
+   * where post's userId is equal to user's id
+   */
   function getUsername(data: any, userId: number) {
     const user = data?.find((user: { id: number }) => userId === user.id);
     return user ? user.username : "No user";

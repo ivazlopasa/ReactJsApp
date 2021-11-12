@@ -4,7 +4,7 @@ import PostsContext from "../../context/PostsContext";
 
 //Constant Search with props getPosts for getting posts and filtering them by username, plus hello string for console log
 const Filter = (props: { hello: string }) => {
-  const { search, setSearch } = useContext(PostsContext);
+  const { filterText, setFilterText } = useContext(PostsContext);
 
   //Console logging via props
   useEffect(() => {
@@ -17,10 +17,9 @@ const Filter = (props: { hello: string }) => {
         className="formInput"
         type="text"
         name="postName"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={filterText}
+        onChange={(e) => setFilterText(e.target.value)}
       />
-      {console.log(search)}
       <br />
     </>
   );

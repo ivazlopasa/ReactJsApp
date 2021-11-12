@@ -1,19 +1,19 @@
 .navbar-brand {
-  margin: var(--margin-sm);
-  font-size: var(--text-xl);
+  margin: 8px;
+  font-size: var(--fontSize-xl);
 }
 .heroText {
-  font-size: var(--text-xxl);
-  margin: var(--margin-lg);
+  font-size: var(--fontSize-xxl);
+  margin: 19px;
 }
 .postDiv {
   background: var(--color-primary);
-  padding: var(--padding-sm);
+  padding: 32px;
   text-decoration: none;
-  margin: var(--margin-md);
+  margin: 16px;
   border-radius: 5px;
   box-shadow: -1px 2px 34px -13px rgba(0, 0, 0, 0.75);
-  text-align: var(--align-left);
+  text-align: left;
   overflow: hidden;
   height: 600px;
 
@@ -23,17 +23,17 @@
   }
 }
 .row {
-  margin: var(--margin-md);
-  padding: var(--padding-lg);
+  margin: 16px;
+  padding: 32px;
 }
 .postTitle {
   color: var(--color-txt-primary);
-  font-size: var(--text-md);
+  font-size: var(--fontSize-md);
 }
 .postBody {
   color: var(--color-txt-primary);
-  font-size: var(--text-xs);
-  margin-bottom: var(--margin-bottom);
+  font-size: var(--fontSize-xs);
+  margin-bottom: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

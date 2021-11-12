@@ -12,8 +12,7 @@ const Comments = (props: { id: number; hello: string }) => {
     console.log(`${props.hello} Comments Component`);
 
     let allComments = contextData.comments;
-    console.log(props.id);
-
+    //filtering comments based on id
     const filteredComments = allComments?.filter(
       (c: { postId: number }) => props.id === c.postId
     );

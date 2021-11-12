@@ -1,25 +1,25 @@
 .commentsDiv {
-  margin: var(--margin-auto);
+  margin: auto;
   width: 70%;
-  padding: var(--padding-sm);
-  margin-bottom: var(--margin-bottom);
+  padding: 32px;
+  margin-bottom: 32px;
 }
 .comment {
   color: var(--color-secondary);
-  text-align: var(--align-left);
+  text-align: left;
   line-height: var(--line-height--md);
 }
 .commentsText {
   color: var(--color-txt-secondary);
   line-height: var(--line-height--sm);
-  font-size: var(--text-sm);
+  font-size: var(--fontSize-sm);
 }
 .commentsTextPost {
   @extend .comment;
-  font-size: var(--text-md);
-  margin-bottom: var(--margin-bottom);
+  font-size: var(--fontSize-md);
+  margin-bottom: 32px;
 }
 .commentsTitle {
   @extend .comment;
-  font-size: var(--text-lg);
+  font-size: var(--fontSize-lg);
 }

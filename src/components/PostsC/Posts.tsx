@@ -12,20 +12,17 @@ import { IComments } from "../../interfaces/IComments";
 //Constant Posts with props posts for displaying all posts on homepage and hello string for rendering log in the console
 const Posts = (props: { filteredPosts: IPost[]; hello: string }) => {
   const postAppContext = useContext(PostsContext);
-  const { posts } = postAppContext;
-  const { search } = postAppContext;
+  const { posts, filterText } = postAppContext;
   const [filteredPosts, setFilteredPosts] = useState<Array<IPost>>([]);
   const [users, setUsers] = useState<Array<IUsers>>([]);
   const [, setPostComments] = useState<Array<IComments>>([]);
 
   useEffect(() => {
-    console.log("Search:", search);
     console.log(`${props.hello} Posts Component`);
     const { users } = postAppContext;
     const { comments } = postAppContext;
-    console.log("Filtered posts:", filteredPosts);
 
-    if (search.length > 0) {
+    if (filterText.length > 0) {
       setFilteredPosts(props.filteredPosts);
     } else {
       setFilteredPosts(posts);
@@ -35,7 +32,7 @@ const Posts = (props: { filteredPosts: IPost[]; hello: string }) => {
   }, [
     props.hello,
     postAppContext,
-    search,
+    filterText,
     props.filteredPosts,
     filteredPosts,
     posts,
