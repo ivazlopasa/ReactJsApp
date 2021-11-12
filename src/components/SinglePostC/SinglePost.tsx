@@ -9,9 +9,7 @@ import { IUsers } from "../../interfaces/IUsers";
 
 //Function Post with props id for displaying active post(the one user choose) on homepage and hello string for rendering log in the console
 function Post(props: { hello: string }) {
-  const { posts } = useContext(PostsContext);
-  const { users } = useContext(PostsContext);
-  const { search } = useContext(PostsContext);
+  const { posts, users, filterText } = useContext(PostsContext);
 
   const [activePost, setActivePost] = useState<IPost>();
   const [postUser, setPostUser] = useState<IUsers>();
@@ -19,13 +17,13 @@ function Post(props: { hello: string }) {
 
   useEffect(() => {
     console.log(`${props.hello} Post Component`);
-    console.log(posts);
-    console.log("Search:", search);
 
+    //finding the current post by id from url
     if (posts?.length > 0) {
       const currentPost = posts.find((post) => {
         return post.id === parseInt(id);
       });
+      //finding user from post's userId
       const user = users?.find(
         (u: { id: number }) => u.id === currentPost?.userId
       );
@@ -33,7 +31,7 @@ function Post(props: { hello: string }) {
       setActivePost(currentPost);
       setPostUser(user);
     }
-  }, [posts, props.hello, id, users, search]);
+  }, [posts, props.hello, id, users, filterText]);
 
   if (!activePost) return <div className="loader"></div>;
   return (

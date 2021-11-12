@@ -1,22 +1,22 @@
 .loader {
-    border: 16px solid var(--color-txt-primary);
-    margin: var(--margin-auto);
-    margin-top: var(--margin-top);
-    border-radius: 50%;
-    border-top: 16px solid var(--color-secondary);
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
+  border: 16px solid var(--color-txt-primary);
+  margin: auto;
+  margin-top: 160px;
+  border-radius: 50%;
+  border-top: 16px solid var(--color-secondary);
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
 }
 .bodyText {
-    width: 70%;
-    text-align: var(--align-left);
-    font-size: var(--text-lg);
-    line-height: var(--line-height--md);
-    margin: var(--margin-auto);
-    margin-bottom: var(--margin-bottom);
+  width: 70%;
+  text-align: left;
+  font-size: var(--fontSize-lg);
+  line-height: var(--line-height--md);
+  margin: auto;
+  margin-bottom: 32px;
 }
 a {
-    text-decoration: none !important;
+  text-decoration: none !important;
 }

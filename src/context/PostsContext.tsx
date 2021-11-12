@@ -7,8 +7,8 @@ const PostsContext = React.createContext({
   posts: [] as Array<IPost>,
   users: [] as Array<IUsers>,
   comments: [] as Array<IComments>,
-  search: "",
-  setSearch: (search: string) => {},
+  filterText: "",
+  setFilterText: (filterText: string) => {},
 });
 
 export default PostsContext;

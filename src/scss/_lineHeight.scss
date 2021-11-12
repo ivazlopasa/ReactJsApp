@@ -2,10 +2,6 @@
   //Scale line heights
   --line-height-multiplier: 1.1;
   --line-height--sm: 2;
-  --line-height--md: calc(
-    var(--line-height-sm) * var(--line-height-multiplier)
-  );
-  --line-height--lg: calc(
-    var(--line-height--md) * var(--line-height-multiplier)
-  );
+  --line-height--md: 2.2;
+  --line-height--lg: 2.5;
 }
