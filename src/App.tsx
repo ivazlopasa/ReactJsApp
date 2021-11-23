@@ -11,6 +11,8 @@ import axios from "axios";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { IUsers } from "./interfaces/IUsers";
 import { IComments } from "./interfaces/IComments";
+import SecretAnswer from "./components/SecretAnswerC/SecretAnswer";
+import ProtectedRoute from "./ProtectedRoute";
 
 type MyProps = {
   hello: string;
@@ -95,13 +97,19 @@ function App(props: MyProps) {
       >
         <BrowserRouter>
           <Switch>
+            <Route path="/secretAnswer" exact>
+              <SecretAnswer hello={hello} />
+            </Route>
             <Route path="/posts" exact>
               <Posts filteredPosts={filteredPosts} hello={hello} />
             </Route>
             <Route exact path="/" render={() => <Redirect to="/posts" />} />
-            <Route path="/post/:id">
-              <SinglePost hello={hello} />
-            </Route>
+            <ProtectedRoute
+              path="/post/:id"
+              component={SinglePost}
+              secretAnswer={localStorage.getItem("secretAnswer")}
+              authenticationPath={"/secretAnswer"}
+            ></ProtectedRoute>
           </Switch>
           <ReactQueryDevtools />
         </BrowserRouter>

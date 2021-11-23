@@ -16,7 +16,7 @@ function Post(props: { hello: string }) {
   const { id } = useParams<IParams>();
 
   useEffect(() => {
-    console.log(`${props.hello} Post Component`);
+    console.log(`${props.hello} Single Post Component`);
 
     //finding the current post by id from url
     if (posts?.length > 0) {

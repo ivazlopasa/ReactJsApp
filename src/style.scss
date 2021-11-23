@@ -6,6 +6,7 @@
 @use "components/SinglePostC/singlePost" as *;
 @use "components/PostsC/posts" as *;
 @use "components/UsersC/users" as *;
+@use "components/SecretAnswerC/secretAnswer.scss" as *;
 
 body {
   font-size: var(--fontSize-xs);
