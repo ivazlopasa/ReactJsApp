@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import "./style.scss";
 import Posts from "./components/PostsC/Posts";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import SinglePost from "./components/SinglePostC/SinglePost";
 import PostsContext from "./context/PostsContext";
 import { IPost } from "./interfaces/IPost";
@@ -96,21 +96,26 @@ function App(props: MyProps) {
         value={{ posts, users, comments, filterText, setFilterText }}
       >
         <BrowserRouter>
-          <Switch>
-            <Route path="/secretAnswer" exact>
-              <SecretAnswer hello={hello} />
-            </Route>
-            <Route path="/posts" exact>
-              <Posts filteredPosts={filteredPosts} hello={hello} />
-            </Route>
-            <Route exact path="/" render={() => <Redirect to="/posts" />} />
-            <ProtectedRoute
-              path="/post/:id"
-              component={SinglePost}
-              secretAnswer={localStorage.getItem("secretAnswer")}
-              authenticationPath={"/secretAnswer"}
-            ></ProtectedRoute>
-          </Switch>
+          <Routes>
+            <Route
+              path="/secretAnswer/*"
+              element={<SecretAnswer hello={hello} />}
+            />
+            <Route
+              path="/posts/*"
+              element={<Posts filteredPosts={filteredPosts} hello={hello} />}
+            />
+            <Route path="/*" element={<Navigate to="/posts" />} />
+            <Route
+              path="/post/:id/*"
+              element={
+                <ProtectedRoute
+                  component={<SinglePost hello={hello} />}
+                  authenticationPath={"/secretAnswer"}
+                />
+              }
+            />
+          </Routes>
           <ReactQueryDevtools />
         </BrowserRouter>
       </PostsContext.Provider>

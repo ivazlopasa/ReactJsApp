@@ -3,7 +3,6 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import Comments from "../CommentsC/Comments";
 import PostsContext from "../../context/PostsContext";
-import { IParams } from "../../interfaces/IParams";
 import { IPost } from "../../interfaces/IPost";
 import { IUsers } from "../../interfaces/IUsers";
 
@@ -13,7 +12,8 @@ function Post(props: { hello: string }) {
 
   const [activePost, setActivePost] = useState<IPost>();
   const [postUser, setPostUser] = useState<IUsers>();
-  const { id } = useParams<IParams>();
+
+  const { id } = useParams();
 
   useEffect(() => {
     console.log(`${props.hello} Single Post Component`);
@@ -21,13 +21,15 @@ function Post(props: { hello: string }) {
     //finding the current post by id from url
     if (posts?.length > 0) {
       const currentPost = posts.find((post) => {
-        return post.id === parseInt(id);
+        if (id) {
+          return post.id === parseInt(id);
+        }
+        return id;
       });
       //finding user from post's userId
       const user = users?.find(
         (u: { id: number }) => u.id === currentPost?.userId
       );
-
       setActivePost(currentPost);
       setPostUser(user);
     }
@@ -45,7 +47,7 @@ function Post(props: { hello: string }) {
       <section className="commentsDiv">
         <h2 className="commentsTitle">Comments</h2>
         <p className="commentsTextPost">
-          <Comments id={parseInt(id)} hello={props.hello} />
+          <Comments id={activePost.id} hello={props.hello} />
         </p>
       </section>
       <Link to="/posts" className="btn btn-dark btn-lg">

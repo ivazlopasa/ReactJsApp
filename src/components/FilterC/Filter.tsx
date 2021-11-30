@@ -20,7 +20,6 @@ const Filter = (props: { hello: string }) => {
         value={filterText}
         onChange={(e) => setFilterText(e.target.value)}
       />
-      <br />
     </>
   );
 };

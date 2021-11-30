@@ -1,28 +1,21 @@
-import { Redirect, Route, RouteProps } from "react-router";
+/* import { Component } from "react"; */
+import { Navigate, RouteProps, useLocation } from "react-router";
 import { SECRET_ANSWER } from "./constants/Constants";
 
 export type ProtectedRouteProps = {
-  secretAnswer: string | null;
+  component: JSX.Element;
   authenticationPath: string;
 } & RouteProps;
 
 export default function ProtectedRoute({
-  secretAnswer,
+  component,
   authenticationPath,
-  ...routeProps
 }: ProtectedRouteProps) {
+  let location = useLocation();
+
   if (localStorage.getItem("secretAnswer") === SECRET_ANSWER) {
-    return <Route {...routeProps} />;
+    return component;
   } else {
-    return (
-      <Redirect
-        to={{
-          pathname: authenticationPath,
-          state: {
-            from: routeProps.location,
-          },
-        }}
-      />
-    );
+    return <Navigate to={authenticationPath} state={{ from: location }} />;
   }
 }

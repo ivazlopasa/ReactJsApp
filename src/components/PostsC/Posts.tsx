@@ -61,9 +61,7 @@ const Posts = (props: { filteredPosts: IPost[]; hello: string }) => {
         {filteredPosts?.map((post) => {
           return (
             <div key={post.id} className="col-md-4">
-              <Link
-                to={{ pathname: `/post/${post.id}`, state: { post: post.id } }}
-              >
+              <Link to={`/post/${post.id}`} state={{ post: post.id }}>
                 <div className="postDiv">
                   <h3 className="postTitle">
                     {post.title.length < 15

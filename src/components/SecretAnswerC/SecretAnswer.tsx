@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { SECRET_ANSWER } from "../../constants/Constants";
 import { TErrorMessage } from "../../types/TErrorMessage";
 import { Error } from "../ErrorC/Error";
@@ -20,7 +20,7 @@ enum ERROR_MESSAGE {
 
 function SecretAnswer(props: { hello: string }) {
   const [inputAnswer, setInputAnswer] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation() as stateType;
 
   const [errorMessage, setErrorMessage] = useState<TErrorMessage | null>(null);
@@ -52,8 +52,8 @@ function SecretAnswer(props: { hello: string }) {
       return;
     }
     if (inputAnswer.toLowerCase() === SECRET_ANSWER) {
-      localStorage.setItem("secretAnswer", "banana");
-      history.push(location.state.from);
+      navigate(location.state.from);
+      return;
     } else {
       setErrorMessage(ERROR_MESSAGE.WRONG_ANSWER);
     }
