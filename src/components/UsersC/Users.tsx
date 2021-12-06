@@ -17,7 +17,7 @@ const Users = (props: { data: IUsers[]; userId: number; hello: string }) => {
    */
   function getUsername(data: any, userId: number) {
     const user = data?.find((user: { id: number }) => userId === user.id);
-    return user ? user.username : "No user";
+    return user ? `${user.username}, ${user.name}` : "No user";
   }
 
   if (!props.data) return <span>There are no users for this post</span>;

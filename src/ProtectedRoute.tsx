@@ -1,4 +1,3 @@
-/* import { Component } from "react"; */
 import { Navigate, RouteProps, useLocation } from "react-router";
 import { SECRET_ANSWER } from "./constants/Constants";
 
