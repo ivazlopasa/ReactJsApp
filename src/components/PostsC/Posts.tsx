@@ -1,13 +1,13 @@
 //Imports needed for this file
 import { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import Comments from "../CommentsC/Comments";
-import Users from "../UsersC/Users";
-import Filter from "../FilterC/Filter";
 import PostsContext from "../../context/PostsContext";
+import Filter from "../FilterC/Filter";
 import { IPost } from "../../interfaces/IPost";
 import { IUsers } from "../../interfaces/IUsers";
 import { IComments } from "../../interfaces/IComments";
+import Users from "../UsersC/Users";
+import Comments from "../CommentsC/Comments";
 
 //Constant Posts with props posts for displaying all posts on homepage and hello string for rendering log in the console
 const Posts = (props: { filteredPosts: IPost[]; hello: string }) => {
@@ -61,9 +61,7 @@ const Posts = (props: { filteredPosts: IPost[]; hello: string }) => {
         {filteredPosts?.map((post) => {
           return (
             <div key={post.id} className="col-md-4">
-              <Link
-                to={{ pathname: `/post/${post.id}`, state: { post: post.id } }}
-              >
+              <Link to={`/post/${post.id}`} state={{ post: post.id }}>
                 <div className="postDiv">
                   <h3 className="postTitle">
                     {post.title.length < 15

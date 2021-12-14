@@ -1,9 +1,7 @@
 //Imports needed for this file
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import "./style.scss";
-import Posts from "./components/PostsC/Posts";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import SinglePost from "./components/SinglePostC/SinglePost";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import PostsContext from "./context/PostsContext";
 import { IPost } from "./interfaces/IPost";
 import { useQuery } from "react-query";
@@ -11,12 +9,22 @@ import axios from "axios";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { IUsers } from "./interfaces/IUsers";
 import { IComments } from "./interfaces/IComments";
+import ProtectedRoute from "./ProtectedRoute";
+import Posts from "./components/PostsC/Posts";
+import React from "react";
 
 type MyProps = {
   hello: string;
 };
 
 function App(props: MyProps) {
+  const SinglePost = React.lazy(
+    () => import("./components/SinglePostC/SinglePost")
+  );
+  const SecretAnswer = React.lazy(
+    () => import("./components/SecretAnswerC/SecretAnswer")
+  );
+
   const hello = "Hello From";
   const [posts, setPosts] = useState<Array<IPost>>([]);
   const [users, setUsers] = useState<Array<IUsers>>([]);
@@ -94,15 +102,28 @@ function App(props: MyProps) {
         value={{ posts, users, comments, filterText, setFilterText }}
       >
         <BrowserRouter>
-          <Switch>
-            <Route path="/posts" exact>
-              <Posts filteredPosts={filteredPosts} hello={hello} />
-            </Route>
-            <Route exact path="/" render={() => <Redirect to="/posts" />} />
-            <Route path="/post/:id">
-              <SinglePost hello={hello} />
-            </Route>
-          </Switch>
+          <Suspense fallback={<span>Loading..</span>}>
+            <Routes>
+              <Route
+                path="/secretAnswer/*"
+                element={<SecretAnswer hello={hello} />}
+              />
+              <Route
+                path="/posts/*"
+                element={<Posts filteredPosts={filteredPosts} hello={hello} />}
+              />
+              <Route path="/*" element={<Navigate to="/posts" />} />
+              <Route
+                path="/post/:id/*"
+                element={
+                  <ProtectedRoute
+                    component={<SinglePost hello={hello} />}
+                    authenticationPath={"/secretAnswer"}
+                  />
+                }
+              />
+            </Routes>
+          </Suspense>
           <ReactQueryDevtools />
         </BrowserRouter>
       </PostsContext.Provider>
