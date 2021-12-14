@@ -1,25 +1,26 @@
 //Imports needed for this file
 import {useState, useEffect} from "react";
-import "./App.css";
-import Posts from "./components/Posts";
+import "./style.scss";
+import Posts from "./components/PostsC/Posts";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import Post from "./components/Post";
+import SinglePost from "./components/SinglePostC/SinglePost";
 import PostsContext from './context/PostsContext';
 import {IPost} from './interfaces/IPost';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import axios from "axios";
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 type MyProps = {
   hello: string;
 };
-
-const queryClient = new QueryClient();
 
 //Class App is responsible for displaying the homepage(posts page)
 function App (props: MyProps){
 
   const hello = "Hello From";
   const [posts, setPosts] = useState <Array<IPost>>([]); 
+  const [users, setUsers] = useState([]);
+  const [comments, setPostComments] = useState([]);
 
   const getPosts = async () => {
       const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts');
@@ -27,7 +28,19 @@ function App (props: MyProps){
       return data;
     };
 
-  const { data /* ,isLoading */ } = useQuery('posts', getPosts);
+  const { data } = useQuery('posts', getPosts);
+
+  const getUsers = async () => {  
+    const {data} = await axios.get('https://jsonplaceholder.typicode.com/users');
+    return data;
+  }; 
+  const { data: dataUsers} = useQuery('users', getUsers); 
+
+  const getComments = async () => {
+    const { data } = await axios.get('https://jsonplaceholder.typicode.com/comments');
+    return data;
+    };
+    const { data: dataComments } = useQuery('comments', getComments);
 
   useEffect(() => {
    //Getting the data from json files
@@ -35,25 +48,32 @@ function App (props: MyProps){
     const posts = data;
     setPosts(posts);
   }
-  }, [data])
+  if(dataUsers){
+    const users = dataUsers;
+    setUsers(users);
+  }
+  if(dataComments){
+    const comments = dataComments;
+    setPostComments(comments);
+  }
+  }, [data, dataComments, dataUsers])
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <PostsContext.Provider value={{posts}}> 
-          <BrowserRouter>
-            <Switch>
-              <Route path="/posts" exact>
-                <Posts hello={hello}/>
-              </Route>
-              <Route exact path="/" render={() => (<Redirect to="/posts" />)} /> 
-              <Route path="/post/:id">
-                <Post hello={hello} />
-              </Route> 
-            </Switch>
-          </BrowserRouter>
-        </PostsContext.Provider> 
-      </QueryClientProvider>
+      <PostsContext.Provider value={{posts, users, comments}}> 
+        <BrowserRouter>
+          <Switch>
+            <Route path="/posts" exact>
+              <Posts hello={hello}/>
+            </Route>
+            <Route exact path="/" render={() => (<Redirect to="/posts" />)} /> 
+            <Route path="/post/:id">
+              <SinglePost hello={hello} />
+            </Route> 
+          </Switch>
+          <ReactQueryDevtools />
+        </BrowserRouter>
+      </PostsContext.Provider> 
     </>
   );
 }
