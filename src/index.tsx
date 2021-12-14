@@ -7,15 +7,17 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 const hello = "Hello From";
 const queryClient = new QueryClient({
-    defaultOptions: {
+  defaultOptions: {
     queries: {
-    refetchOnWindowFocus: false,
+      refetchOnWindowFocus: false,
     },
-},
+  },
 });
 
 //rendering Router instead of App to use paths in Router file
 ReactDOM.render(
-<QueryClientProvider client={queryClient}>
-<App hello={hello} />
-</QueryClientProvider>, document.getElementById("root"));
+  <QueryClientProvider client={queryClient}>
+    <App hello={hello} />
+  </QueryClientProvider>,
+  document.getElementById("root")
+);
